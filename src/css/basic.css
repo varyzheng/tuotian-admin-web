@@ -1,0 +1,14 @@
+.form {
+  background-color: #fafafa;
+  padding: 30px 10px;
+}
+.a {
+  cursor: pointer;
+  color: #1890ff;
+}
+.a:hover {
+  color: #40a9ff;
+}
+.table-with-img img {
+  width: 50px;
+}

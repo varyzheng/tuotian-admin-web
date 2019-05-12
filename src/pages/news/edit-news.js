@@ -1,10 +1,10 @@
 
-import styles from './project-list.css';
+import styles from './edit-news.css';
 
 export default function() {
   return (
     <div className={styles.normal}>
-      <h1>Page project-list</h1>
+      <h1>Page edit-news</h1>
     </div>
   );
 }

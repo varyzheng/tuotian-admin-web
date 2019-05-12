@@ -1,10 +1,64 @@
 
-import styles from './color-list.css';
+import basic from '@/css/basic.css';
+import { connect } from 'dva';
+import { Table, Divider } from 'antd';
+import Link from 'umi/link';
 
-export default function() {
+const ColorList = (props) => {
+  const deleteColor = (id) => {
+    console.log('delete ' + id)
+  }
+  const columns = [
+    {
+      title: '色卡名称',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: '分类',
+      dataIndex: 'typeName',
+      key: 'typeName',
+    },
+    {
+      title: '是否热销',
+      dataIndex: 'hot',
+      key: 'hot',
+      render: (value, row, index) => {
+        return value ? '是' : '否'
+      },
+    },
+    {
+      title: '缩略图',
+      dataIndex: 'img',
+      key: 'img',
+      render: (value, row, index) => {
+        return <a target="_blank" rel="noopener noreferrer" href={value}><img src={value} alt={row.name}/></a>
+      },
+    },
+    {
+      title: '效果图',
+      dataIndex: 'rendering',
+      key: 'rendering',
+      render: (value, row, index) => {
+        return <a target="_blank" rel="noopener noreferrer" href={value}><img src={value} alt={row.name}/></a>
+      },
+    },
+    {
+      title: '操作',
+      key: 'action',
+      render: (text, record) => (
+        <span>
+          <Link to={`/card/edit-color?id=${record.id}`}>修改</Link>
+          <Divider type="vertical" />
+          <span className={basic.a} onClick={() => { deleteColor(record.id)} }>删除</span>
+        </span>
+      ),
+    },
+  ];
   return (
-    <div className={styles.normal}>
-      <h1>Page color-list</h1>
-    </div>
+    <Table columns={columns} dataSource={props.colorList} rowKey="id" className={basic['table-with-img']}/>
   );
 }
+
+const Connected = connect(({ colorList }) => ({ colorList }))(ColorList)
+export default Connected

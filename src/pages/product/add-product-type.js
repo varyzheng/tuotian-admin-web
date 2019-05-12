@@ -4,14 +4,14 @@ import {
   Form, Input, Radio, Button
 } from 'antd';
 
-const AddColorType = (props) => {
+const AddProductType = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        if (props.currentColorType) {
+        if (props.currentProductType) {
           console.log('修改')
         }
       }
@@ -23,10 +23,10 @@ const AddColorType = (props) => {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
   };
-  const { colorTypeParent, currentColorType } = props
+  const { productTypeParent, currentProductType } = props
   const radios = []
-  colorTypeParent.forEach(item => {
-    radios.push(<Radio value={item.id} key={`colorTypeParent_${item.id}`}>{item.name}</Radio>)
+  productTypeParent.forEach(item => {
+    radios.push(<Radio value={item.id} key={`productTypeParent_${item.id}`}>{item.name}</Radio>)
   })
   return (
     <Form {...formItemLayout} onSubmit={handleSubmit} className={basic.form}>
@@ -37,7 +37,7 @@ const AddColorType = (props) => {
           rules: [{
             required: true, message: '请输入分类名称',
           }],
-          initialValue: currentColorType ? currentColorType.name : '',
+          initialValue: currentProductType ? currentProductType.name : '',
         })(
           <Input />
         )}
@@ -50,7 +50,7 @@ const AddColorType = (props) => {
           rules: [{
             required: true, message: '请选择父级分类',
           }],
-          initialValue: currentColorType ? currentColorType.parentId : '',
+          initialValue: currentProductType ? currentProductType.parentId : '',
         })(
           <Radio.Group>
             <Radio value={0}>无</Radio>
@@ -58,6 +58,7 @@ const AddColorType = (props) => {
           </Radio.Group>
         )}
       </Form.Item>
+
       <Form.Item
         wrapperCol={{ span: 12, offset: 6 }}
       >
@@ -66,6 +67,6 @@ const AddColorType = (props) => {
     </Form>
   );
 }
-const Connected = connect(({ colorTypeParent }) => ({ colorTypeParent }))(AddColorType)
-const WrappedForm = Form.create({ name: 'add-color-type' })(Connected);
+const Connected = connect(({ productTypeParent }) => ({ productTypeParent }))(AddProductType)
+const WrappedForm = Form.create({ name: 'add-product-type' })(Connected);
 export default WrappedForm

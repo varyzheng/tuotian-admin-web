@@ -1,10 +1,10 @@
 
-import styles from './add-project-type.css';
+import styles from './product-list.css';
 
 export default function() {
   return (
     <div className={styles.normal}>
-      <h1>Page add-project-type</h1>
+      <h1>Page product-list</h1>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import { Table, Divider } from 'antd';
 import Link from 'umi/link';
 
-const ColorTypeList = (props) => {
+const ProductTypeList = (props) => {
   const deleteType = (id) => {
     console.log('delete ' + id)
   }
@@ -24,7 +24,7 @@ const ColorTypeList = (props) => {
       key: 'action',
       render: (text, record) => (
         <span>
-          <Link to={`/card/edit-color-type?id=${record.id}`}>修改</Link>
+          <Link to={`/product/edit-product-type?id=${record.id}`}>修改</Link>
           <Divider type="vertical" />
           <span className={basic.a} onClick={() => { deleteType(record.id)} }>删除</span>
         </span>
@@ -32,9 +32,9 @@ const ColorTypeList = (props) => {
     },
   ];
   return (
-    <Table columns={columns} dataSource={props.colorTypeList} rowKey="id"/>
+    <Table columns={columns} dataSource={props.productTypeList} rowKey="id"/>
   );
 }
 
-const Connected = connect(({ colorTypeList }) => ({ colorTypeList }))(ColorTypeList)
+const Connected = connect(({ productTypeList }) => ({ productTypeList }))(ProductTypeList)
 export default Connected
