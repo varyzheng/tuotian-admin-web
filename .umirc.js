@@ -25,4 +25,11 @@ export default {
   targets: {
     ie: 8,
   },
+  proxy: {
+    "/api": {
+      "target": "http://192.168.1.3:9090/",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api" : "" }
+    },
+  },
 }

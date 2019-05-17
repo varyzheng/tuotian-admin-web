@@ -1,19 +1,27 @@
 import { connect } from 'dva';
-import basic from '@/css/basic.css';
 import {
   Form, Input, Radio, Button
 } from 'antd';
 
+import basic from '@/css/basic.css';
+
 const AddColorType = (props) => {
+
+  const { dispatch, colorTypeParent, currentColorType, location } = props
 
   const handleSubmit = (e) => {
     e.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
-        if (props.currentColorType) {
-          console.log('修改')
+        let type = 'currentColorType/addColorType'
+        if (location.pathname === '/card/edit-color-type') {
+          values.id = currentColorType.id
+          type = 'currentColorType/updateColorType'
         }
+        dispatch({
+          type,
+          payload: values,
+        })
       }
     });
   }
@@ -23,7 +31,7 @@ const AddColorType = (props) => {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
   };
-  const { colorTypeParent, currentColorType } = props
+
   const radios = []
   colorTypeParent.forEach(item => {
     radios.push(<Radio value={item.id} key={`colorTypeParent_${item.id}`}>{item.name}</Radio>)
