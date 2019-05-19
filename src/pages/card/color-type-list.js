@@ -1,13 +1,9 @@
 
-import basic from '@/css/basic.css';
 import { connect } from 'dva';
-import { Table, Divider } from 'antd';
+import { Table } from 'antd';
 import Link from 'umi/link';
 
 const ColorTypeList = (props) => {
-  const deleteType = (id) => {
-    console.log('delete ' + id)
-  }
   const columns = [
     {
       title: '分类名称',
@@ -25,14 +21,15 @@ const ColorTypeList = (props) => {
       render: (text, record) => (
         <span>
           <Link to={`/card/edit-color-type?id=${record.id}`}>修改</Link>
-          <Divider type="vertical" />
-          <span className={basic.a} onClick={() => { deleteType(record.id)} }>删除</span>
         </span>
       ),
     },
   ];
+  const pagination = {
+    showTotal: (total) => `共 ${total} 条`
+  }
   return (
-    <Table columns={columns} dataSource={props.colorTypeList} rowKey="id"/>
+    <Table columns={columns} dataSource={props.colorTypeList} rowKey="id" pagination={pagination}/>
   );
 }
 

@@ -6,15 +6,23 @@ import {
 
 const AddProductType = (props) => {
 
+  const { dispatch, location, productTypeParent, currentProductType } = props
+
   const handleSubmit = (e) => {
     e.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
-        if (props.currentProductType) {
-          console.log('修改')
+        let type = 'currentProductType/addProductType'
+        if (location.pathname === '/product/edit-product-type') {
+          values.id = currentProductType.id
+          type = 'currentProductType/updateProductType'
         }
+        dispatch({
+          type,
+          payload: values,
+        })
       }
+
     });
   }
 
@@ -23,7 +31,6 @@ const AddProductType = (props) => {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
   };
-  const { productTypeParent, currentProductType } = props
   const radios = []
   productTypeParent.forEach(item => {
     radios.push(<Radio value={item.id} key={`productTypeParent_${item.id}`}>{item.name}</Radio>)

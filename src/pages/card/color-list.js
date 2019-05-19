@@ -1,13 +1,10 @@
 
 import basic from '@/css/basic.css';
 import { connect } from 'dva';
-import { Table, Divider } from 'antd';
+import { Table } from 'antd';
 import Link from 'umi/link';
 
 const ColorList = (props) => {
-  const deleteColor = (id) => {
-    console.log('delete ' + id)
-  }
   const columns = [
     {
       title: '色卡名称',
@@ -49,8 +46,6 @@ const ColorList = (props) => {
       render: (text, record) => (
         <span>
           <Link to={`/card/edit-color?id=${record.id}`}>修改</Link>
-          <Divider type="vertical" />
-          <span className={basic.a} onClick={() => { deleteColor(record.id)} }>删除</span>
         </span>
       ),
     },

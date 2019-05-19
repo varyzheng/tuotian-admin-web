@@ -3,57 +3,56 @@ import basic from '@/css/basic.css';
 import {
   Form, Input, Radio, Button, Upload, Icon, Switch
 } from 'antd';
+import Cookie from '@/utils/Cookie';
+import { imgFolder } from '@/utils/Constants';
 
 const AddColor = (props) => {
+
+  const { dispatch, location, colorTypeParent, colorTypeChild, currentColor } = props;
+  const { getFieldDecorator } = props.form;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
-        if (props.currentColor) {
-          console.log('修改')
+        if (values.img.file && values.img.file.response && values.img.file.response.code === 200) {
+          values.img = imgFolder + values.img.file.response.data
         }
+        if (values.renderingImg.file && values.renderingImg.file.response && values.renderingImg.file.response.code === 200) {
+          values.renderingImg = imgFolder + values.renderingImg.file.response.data
+        }
+        values.hot = Number(values.hot)
+        let type = 'currentColor/addColor'
+        if (location.pathname === '/card/edit-color') {
+          values.id = currentColor.id
+          type = 'currentColor/updateColor'
+        }
+        dispatch({
+          type,
+          payload: values,
+        })
       }
     });
   }
 
-  const handleUploadImg = (e) => {
-    console.log('上传IMG成功：', e)
+  let tempImg = '', tempRenderingImg = ''
+  if (currentColor) {
+    tempImg = currentColor.img
+    tempRenderingImg = currentColor.renderingImg
   }
 
-  const handleUploadRendering = (e) => {
-    console.log('上传Rendering成功：', e)
-  }
-
-  const { getFieldDecorator } = props.form;
   const formItemLayout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
   };
-  const { colorTypeParent, colorTypeChild, currentColor } = props
-  const radios = []
+  const radios = [];
   colorTypeParent.forEach(item => {
     radios.push(<Radio value={item.id} key={`colorTypeParent_${item.id}`}>{item.name}</Radio>)
-  })
-  const radiosChild = []
+  });
+  const radiosChild = [];
   colorTypeChild.forEach(item => {
     radiosChild.push(<Radio value={item.id} key={`colorTypeChild_${item.id}`}>{item.name}</Radio>)
-  })
-  let imgURL, renderingURL
-  if (currentColor) {
-    imgURL = {
-      name: '图片1',
-      url: currentColor.img,
-      uid: 1
-    }
-    renderingURL = {
-      name: '图片2',
-      url: currentColor.rendering,
-      uid: 2
-    }
-  }
-
+  });
   return (
     <Form {...formItemLayout} onSubmit={handleSubmit} className={basic.form}>
       <Form.Item
@@ -88,14 +87,14 @@ const AddColor = (props) => {
         label="缩略图"
         extra=""
       >
+        {tempImg ? <img className={basic.uploadImg} src={tempImg} alt="缩略图"/> : ''}
         {getFieldDecorator('img', {
           rules: [{
             required: true, message: '请选择上传缩略图',
           }],
-          initialValue: imgURL ? imgURL.url : ''
+          initialValue: tempImg,
         })(
-          <Upload name="file" action="/api/article/v1/image/upload" listType="picture" onChange={handleUploadImg}
-            defaultFileList={imgURL ? [imgURL] : []}>
+          <Upload name="file" action="/api/admin/img/v1/upload?imgPath=color" listType="picture" headers={{Token: Cookie.get('token')}}>
             <Button>
               <Icon type="upload" /> 点击上传文件
             </Button>
@@ -105,14 +104,14 @@ const AddColor = (props) => {
       <Form.Item
         label="效果图"
       >
-        {getFieldDecorator('rendering', {
+        {tempRenderingImg ? <img className={basic.uploadImg} src={tempRenderingImg} alt="效果图"/> : ''}
+        {getFieldDecorator('renderingImg', {
           rules: [{
             required: true, message: '请选择上传效果图',
           }],
-          initialValue: renderingURL ? renderingURL.url : ''
+          initialValue: tempRenderingImg,
         })(
-          <Upload name="file" action="/api/article/v1/image/upload" listType="picture" onChange={handleUploadRendering}
-            defaultFileList={renderingURL ? [renderingURL] : []}>
+          <Upload name="file" action="/api/admin/img/v1/upload?imgPath=color" listType="picture" headers={{Token: Cookie.get('token')}}>
             <Button>
               <Icon type="upload" /> 点击上传文件
             </Button>

@@ -1,9 +1,11 @@
+import { connect } from 'dva';
 import React from 'react';
 import {
   Layout, Menu, Breadcrumb, Icon, message
 } from 'antd';
 import router from 'umi/router';
 import { pageError, breadMapping } from '@/utils/Constants'
+import Cookie from '@/utils/Cookie'
 
 const {
   Content, Footer, Sider,
@@ -32,6 +34,14 @@ class BasicLayout extends React.Component {
       breadSecond,
       activeKey,
     };
+    if (!Cookie.get('token') && pathname !== '/login') {
+      router.push('/login');
+    }
+    const { dispatch } = props
+    dispatch({
+      type: 'initData/initPageData',
+      payload: props.location,
+    })
   }
 
   componentWillReceiveProps(props) {
@@ -52,6 +62,11 @@ class BasicLayout extends React.Component {
       breadSecond,
       activeKey,
     })
+    const { dispatch } = props
+    dispatch({
+      type: 'initData/initPageData',
+      payload: props.location,
+    })
   }
 
   onCollapse = (collapsed) => {
@@ -68,7 +83,7 @@ class BasicLayout extends React.Component {
   }
 
   render () {
-    return (
+    return this.props.location.pathname !== '/login' ? (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider
           collapsible
@@ -119,9 +134,10 @@ class BasicLayout extends React.Component {
           </Footer>
         </Layout>
       </Layout>
-    );
+    ) : this.props.children
   }
 }
 
-export default BasicLayout;
+const Connected = connect()(BasicLayout)
+export default Connected;
 
