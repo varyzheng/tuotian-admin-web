@@ -34,8 +34,8 @@ const ColorList = (props) => {
     },
     {
       title: '效果图',
-      dataIndex: 'rendering',
-      key: 'rendering',
+      dataIndex: 'renderingImg',
+      key: 'renderingImg',
       render: (value, row, index) => {
         return <a target="_blank" rel="noopener noreferrer" href={value}><img src={value} alt={row.name}/></a>
       },
