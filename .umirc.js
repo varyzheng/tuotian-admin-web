@@ -23,7 +23,7 @@ export default {
     }],
   ],
   targets: {
-    ie: 8,
+    ie: 9,
   },
   proxy: {
     "/api": {
