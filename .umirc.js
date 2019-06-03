@@ -27,9 +27,9 @@ export default {
   },
   proxy: {
     "/api": {
-      "target": "http://192.168.1.3:9090/",
+      "target": "http://47.91.253.15/",
       "changeOrigin": true,
-      "pathRewrite": { "^/api" : "" }
+      "pathRewrite": { "^/" : "" }
     },
   },
 }

@@ -21,7 +21,9 @@ export default {
         value.mapping.forEach(item => {
           item.productId = id
           item.colorCardId = item.id
-          item.renderingImg = item.productMappingImg
+          if (item.productMappingImg) {
+            item.renderingImg = item.productMappingImg
+          }
           delete item.id
           delete item.productMappingImg
         });
@@ -43,7 +45,9 @@ export default {
         value.mapping.forEach(item => {
           item.productId = value.id
           item.colorCardId = item.id
-          item.renderingImg = item.productMappingImg
+          if (item.productMappingImg) {
+            item.renderingImg = item.productMappingImg
+          }
           delete item.id
           delete item.productMappingImg
         });
