@@ -1,5 +1,5 @@
 export const pageError = '页面错误，尝试刷新页面或联系管理员'
-export const imgFolder = 'http://47.91.253.15:9999/images/'
+export const imgFolder = 'http://file.tuotianlvye.com/images/'
 export const breadMapping = {
   'card': '色卡中心',
   'add-color-type': '添加色卡分类',
