@@ -67,6 +67,18 @@ const AddColorType = (props) => {
         )}
       </Form.Item>
       <Form.Item
+        label="排序权重："
+      >
+        {getFieldDecorator('seq', {
+          rules: [{
+            required: true, message: '请输入排序权重',
+          }],
+          initialValue: currentColorType ? currentColorType.seq : '',
+        })(
+          <Input />
+        )}
+      </Form.Item>
+      <Form.Item
         wrapperCol={{ span: 12, offset: 6 }}
       >
         <Button type="primary" htmlType="submit">提交</Button>

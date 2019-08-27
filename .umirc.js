@@ -28,8 +28,10 @@ export default {
   proxy: {
     "/api": {
       "target": "http://47.91.253.15/",
+      // "target": "http://192.168.1.106:9090/",
       "changeOrigin": true,
       "pathRewrite": { "^/" : "" }
+      // "pathRewrite": { "^/api" : "" }
     },
   },
 }
