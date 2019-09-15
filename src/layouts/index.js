@@ -91,7 +91,7 @@ class BasicLayout extends React.Component {
           onCollapse={this.onCollapse}
         >
           <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultOpenKeys={['card', 'product', 'news']}
+          <Menu theme="dark" mode="inline" defaultOpenKeys={['card', 'product', 'case', 'news']}
             onClick={this.chooseModule} defaultSelectedKeys={[this.state.activeKey]}
           >
             <SubMenu
@@ -111,6 +111,13 @@ class BasicLayout extends React.Component {
               <Menu.Item key="product-type-list">产品分类列表</Menu.Item>
               <Menu.Item key="add-product">添加产品</Menu.Item>
               <Menu.Item key="product-list">产品列表</Menu.Item>
+            </SubMenu>
+            <SubMenu
+              key="case"
+              title={<span><Icon type="trophy" /><span>案例管理</span></span>}
+            >
+              <Menu.Item key="add-case">添加案例</Menu.Item>
+              <Menu.Item key="case-list">案例列表</Menu.Item>
             </SubMenu>
             {/* <SubMenu
               key="news"

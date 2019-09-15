@@ -26,6 +26,20 @@ export default {
             })
           }
           break;
+        case '/case/case-list':
+          yield put({
+            type: 'caseList/getCaseList',
+            payload: {}
+          })
+          break;
+        case '/case/edit-case':
+          id = Number(location.query.id)
+          result = yield $get('/api/admin/citycase/v1/info', { id })
+          yield put({
+            type: 'currentCase/setCase',
+            payload: result.data,
+          })
+          break;
         case '/card/color-list':
           yield put({
             type: 'colorList/getColorList',
